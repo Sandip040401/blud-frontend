@@ -22,14 +22,14 @@ const Signin = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <form className="w-1/3 bg-white p-8 rounded shadow" onSubmit={handleSubmit}>
-        <h2 className="text-2xl mb-6 text-center">Sign In</h2>
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-pink-300 to-yellow-300">
+      <form className="w-full max-w-sm bg-white p-10 rounded-3xl shadow-lg transform transition-all duration-500 hover:scale-105">
+        <h2 className="text-4xl mb-6 text-center text-gray-800 font-extrabold font-comic">Sign In</h2>
         <input
           type="email"
           name="email"
           placeholder="Email"
-          className="w-full p-2 mb-4 border rounded"
+          className="w-full p-3 mb-4 border border-gray-300 rounded-full focus:outline-none focus:ring-4 focus:ring-yellow-400 transition-all"
           value={formData.email}
           onChange={handleChange}
         />
@@ -37,16 +37,16 @@ const Signin = () => {
           type="password"
           name="password"
           placeholder="Password"
-          className="w-full p-2 mb-4 border rounded"
+          className="w-full p-3 mb-4 border border-gray-300 rounded-full focus:outline-none focus:ring-4 focus:ring-yellow-400 transition-all"
           value={formData.password}
           onChange={handleChange}
         />
-        <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded">
+        <button type="submit" className="w-full bg-yellow-400 text-gray-800 p-3 rounded-full shadow-lg hover:bg-yellow-500 transition-all font-bold font-comic">
           Sign In
         </button>
         <button 
           type="button" 
-          className="w-full bg-gray-500 text-white p-2 rounded mt-4"
+          className="w-full bg-gray-400 text-white p-3 rounded-full mt-4 shadow-lg hover:bg-gray-500 transition-all font-bold font-comic"
           onClick={() => navigate('/signup')}
         >
           Don't have an account? Sign Up
