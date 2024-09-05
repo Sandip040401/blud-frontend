@@ -1,9 +1,12 @@
-// src/components/Home.js
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getCurrentUser } from '../services/authService';
 import { useNavigate } from 'react-router-dom';
+import Navbar from './Navbar';
+import SidebarLeft from './SidebarLeft';
+import MainContent from './MainContent';
 
 const Home = () => {
+  const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -13,9 +16,17 @@ const Home = () => {
     }
   }, [navigate]);
 
+  const toggleSidebar = () => {
+    setSidebarCollapsed(!isSidebarCollapsed);
+  };
+
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <h1 className="text-4xl">Welcome, {getCurrentUser()?.name}!</h1>
+    <div className="relative min-h-screen flex flex-col">
+      <Navbar toggleSidebar={toggleSidebar} />
+      <div className="flex justify-between mt-16">
+        <SidebarLeft isCollapsed={isSidebarCollapsed} />
+        <MainContent />
+      </div>
     </div>
   );
 };

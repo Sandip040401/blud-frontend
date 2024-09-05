@@ -8,6 +8,7 @@ const Signup = () => {
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -18,6 +19,7 @@ const Signup = () => {
     e.preventDefault();
     setLoading(true);
     setSuccess(false);
+    setError('');
     try {
       await axios.post(`${API_URL}/api/auth/signup`, formData);
       setLoading(false);
@@ -26,21 +28,26 @@ const Signup = () => {
         navigate('/signin');
       }, 2000);
     } catch (error) {
-      console.error('Error signing up:', error);
       setLoading(false);
-      alert(error.response?.data?.message || 'Signup failed');
+      setError(error.response?.data?.message || 'Signup failed');
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-purple-300 to-blue-300">
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-purple-300 to-blue-300 relative">
+      {success && (
+        <div className="absolute top-5 right-5 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded shadow-lg">
+          <strong className="font-bold">Success!</strong>
+          <span className="block sm:inline ml-2">Signup successful. Redirecting...</span>
+        </div>
+      )}
+      {error && (
+        <div className="absolute top-5 right-5 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded shadow-lg">
+          <strong className="font-bold">Error!</strong>
+          <span className="block sm:inline ml-2">{error}</span>
+        </div>
+      )}
       <div className="flex flex-col items-center w-full max-w-sm p-10 bg-white rounded-3xl shadow-lg transform transition-all duration-500 hover:scale-105">
-        {success && (
-          <div className="mb-4 w-full bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded shadow-lg">
-            <strong className="font-bold">Success!</strong>
-            <span className="block sm:inline ml-2">Signup successful. Redirecting...</span>
-          </div>
-        )}
         <h2 className="text-4xl mb-6 text-center text-gray-800 font-extrabold font-comic">Sign Up</h2>
         <form onSubmit={handleSubmit} className="w-full">
           <input
