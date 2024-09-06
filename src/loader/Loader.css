@@ -8,7 +8,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(255, 255, 255, 0.5); /* Light semi-transparent background */
     z-index: 9999; /* Ensure it appears above other content */
   }
   
