@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Post } from './Post'; // Ensure Post component is imported correctly
 import { formatDistanceToNow } from 'date-fns'; // Import date-fns function
+import Loader from '../loader/Loader';
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
@@ -14,7 +15,6 @@ const Posts = () => {
     const fetchPosts = async () => {
       try {
         const response = await axios.get(`${API_URL}/api/posts`); // Replace with your actual API endpoint
-        
         setPosts(response.data);
         setLoading(false);
       } catch (err) {
@@ -26,7 +26,7 @@ const Posts = () => {
     fetchPosts();
   }, []);
 
-  if (loading) return <p>Loading posts...</p>;
+  if (loading) return <Loader/>
   if (error) return <p>Error: {error}</p>;
 
   // Helper function to format time ago
