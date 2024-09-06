@@ -1,6 +1,6 @@
 /* Loader.css */
 .loader-container {
-    position: fixed; /* Use fixed positioning to ensure it stays in place */
+    position: fixed; /* Ensure it stays in place */
     top: 0;
     left: 0;
     width: 100%;
@@ -8,8 +8,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(0, 0, 0, 0.3); /* Optional: semi-transparent background */
-    z-index: 9999; /* Ensure the loader appears above other content */
+    background: rgba(255, 255, 255, 0.5); /* Light semi-transparent background */
+    z-index: 9999; /* Ensure it appears above other content */
   }
   
   .loader {
@@ -21,18 +21,19 @@
   .dot {
     width: 15px;
     height: 15px;
-    background-color: #3498db; /* Base color for the dots */
     border-radius: 50%;
     margin: 0 5px;
     animation: move 1.5s infinite;
   }
   
-  .dot1 { animation-delay: 0s; }
-  .dot2 { animation-delay: 0.3s; }
-  .dot3 { animation-delay: 0.6s; }
-  .dot4 { animation-delay: 0.9s; }
-  .dot5 { animation-delay: 1.2s; }
+  /* Dot colors */
+  .dot1 { background-color: #3498db; animation-delay: 0s; } /* Blue */
+  .dot2 { background-color: #e74c3c; animation-delay: 0.3s; } /* Red */
+  .dot3 { background-color: #2ecc71; animation-delay: 0.6s; } /* Green */
+  .dot4 { background-color: #f39c12; animation-delay: 0.9s; } /* Yellow */
+  .dot5 { background-color: #9b59b6; animation-delay: 1.2s; } /* Purple */
   
+  /* Keyframes for bouncing dots */
   @keyframes move {
     0%, 100% {
       transform: translateY(0);
@@ -40,13 +41,6 @@
     50% {
       transform: translateY(-15px); /* Adjust the distance as needed */
     }
-  }
-  
-  .loader .dot:nth-child(2) {
-    animation: move2 1.5s infinite;
-  }
-  .loader .dot:nth-child(3) {
-    animation: move3 1.5s infinite;
   }
   
   @keyframes move2 {
@@ -71,5 +65,12 @@
     50% {
       transform: translateY(-15px);
     }
+  }
+  
+  .loader .dot:nth-child(2) {
+    animation: move2 1.5s infinite;
+  }
+  .loader .dot:nth-child(3) {
+    animation: move3 1.5s infinite;
   }
   
