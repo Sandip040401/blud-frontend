@@ -1,26 +1,49 @@
 import React, { useState } from 'react';
 import { FaVideo, FaPhotoVideo, FaSmile } from 'react-icons/fa';
+import axios from 'axios';
 import Posts from './Posts';
 
 export const CreatePost = () => {
-  const [postContent, setPostContent] = useState('');
+  const [postTitle, setPostTitle] = useState(''); // State for post title
   const [mediaContent, setMediaContent] = useState(null); // State for file
   const [showModal, setShowModal] = useState(false); // State for modal visibility
+  const API_URL = import.meta.env.VITE_API_URL;
+  
+  const user = JSON.parse(localStorage.getItem('user'));
+  const token = user?.token;
+  const userName = user?.name; // Extract user's name from token
 
-  // Handle post submission
-  const handlePostSubmit = () => {
-    if (postContent || mediaContent) {
-      // Submit the post content and media (you can call an API here)
-      console.log('Post submitted:', { postContent, mediaContent });
-      setPostContent('');
-      setMediaContent(null);
-      setShowModal(false); // Close modal after posting
+  const handlePostSubmit = async () => {
+    if (postTitle || mediaContent) {
+      const formData = new FormData();
+      formData.append('title', postTitle);
+      formData.append('name', userName); // Add user's name
+      formData.append('timeAgo', new Date().toISOString()); // Set current time
+
+      if (mediaContent) {
+        formData.append('media', mediaContent);
+      }
+
+      try {
+        await axios.post(`${API_URL}/api/posts`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+        setPostTitle('');
+        setMediaContent(null);
+        setShowModal(false); // Close the modal
+        window.location.reload(); 
+      } catch (error) {
+        console.error('Error submitting post:', error);
+        // Optionally handle the error, e.g., show a message
+      }
     } else {
-      alert('Please add content to post');
+      // Optionally handle the case where no title or media is provided
     }
   };
 
-  // Handle file input (photo/video)
   const handleFileChange = (e) => {
     setMediaContent(e.target.files[0]);
   };
@@ -30,15 +53,14 @@ export const CreatePost = () => {
       <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-xl mx-auto mt-6 border border-gray-200 relative z-10">
         <div className="flex items-center space-x-4 mb-4">
           <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-white text-xl">
-            {/* Profile Icon Placeholder */}
             <span role="img" aria-label="Profile Icon">👤</span>
           </div>
           <input
             type="text"
             className="w-full px-4 py-2 border border-gray-300 rounded-full text-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-            placeholder="What's on your mind?"
-            value={postContent}
-            onChange={(e) => setPostContent(e.target.value)}
+            placeholder="Post Title"
+            value={postTitle}
+            onChange={(e) => setPostTitle(e.target.value)}
           />
         </div>
 
@@ -52,7 +74,7 @@ export const CreatePost = () => {
           </button>
           <button
             className="flex items-center space-x-2 text-green-500 hover:bg-gray-100 py-2 px-4 rounded-lg transition-transform transform hover:scale-105"
-            onClick={() => setShowModal(true)} // Open modal on click
+            onClick={() => setShowModal(true)}
           >
             <FaPhotoVideo className="text-xl" />
             <span className="text-lg">Photo/video</span>
@@ -71,14 +93,14 @@ export const CreatePost = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-20">
           <div className="bg-white rounded-lg p-6 w-full max-w-lg mx-auto shadow-xl relative">
             <h3 className="text-xl font-semibold mb-4">Create Post</h3>
-            
-            {/* Input for writing a caption */}
-            <textarea
+
+            {/* Input for writing a title */}
+            <input
               className="w-full border border-gray-300 rounded-lg p-4 mb-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-              rows="4"
-              placeholder="What's on your mind?"
-              value={postContent}
-              onChange={(e) => setPostContent(e.target.value)}
+              type="text"
+              placeholder="Post Title"
+              value={postTitle}
+              onChange={(e) => setPostTitle(e.target.value)}
             />
             
             {/* File input for uploading photo/video */}
@@ -89,16 +111,14 @@ export const CreatePost = () => {
               className="mb-4"
             />
             
-            {/* Display the selected file */}
             {mediaContent && (
               <p className="text-sm text-gray-700 mb-4">Selected file: {mediaContent.name}</p>
             )}
 
-            {/* Modal action buttons */}
             <div className="flex justify-end space-x-4 mt-4">
               <button
                 className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition-colors"
-                onClick={() => setShowModal(false)} // Close modal
+                onClick={() => setShowModal(false)}
               >
                 Cancel
               </button>
@@ -113,14 +133,7 @@ export const CreatePost = () => {
         </div>
       )}
 
-      {/* Posts */}
-      {/* <div className="bg-yellow-50 p-6 rounded-xl shadow-lg mb-6 transform hover:scale-105 transition-transform duration-300">
-        <p className="text-gray-800 font-bold">Post 1: Cartoon Fun!</p>
-      </div>
-      <div className="bg-yellow-50 p-6 rounded-xl shadow-lg mb-6 transform hover:scale-105 transition-transform duration-300">
-        <p className="text-gray-800 font-bold">Post 2: Check this out!</p>
-      </div> */}
-      <Posts/>
+      <Posts />
     </>
   );
 };
