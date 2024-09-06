@@ -15,6 +15,7 @@ const Navbar = ({ toggleSidebar }) => {
   const handleLogout = () => {
     logout();
     navigate('/');
+    window.location.reload(); 
   };
 
   return (
