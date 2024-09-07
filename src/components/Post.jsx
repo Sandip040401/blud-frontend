@@ -2,32 +2,32 @@ import React from 'react';
 import { FaEllipsisH, FaTimes, FaThumbsUp, FaComment, FaShare } from 'react-icons/fa';
 
 export const Post = ({ title, name, timeAgo, content, likes, comments, shares }) => {
-  // Function to render content based on its type
+  // Function to render content based on its type (image or video)
   const renderContent = (content) => {
-    if (content.imageUrl) {
+    if (content.image) {
       return (
-        <img 
-          src={content.imageUrl} 
-          alt="Post content" 
-          className="w-full h-auto max-h-96 object-cover rounded-lg mb-4" 
+        <img
+          src={content.image} // base64-encoded image data
+          alt="Post content"
+          className="w-full h-auto max-h-96 object-cover rounded-lg mb-4"
         />
       );
-    } else if (content.videoUrl) {
+    } else if (content.video) {
       return (
-        <video 
-          controls 
+        <video
+          controls
           className="w-full h-auto max-h-96 rounded-lg mb-4"
         >
-          <source src={content.videoUrl} type="video/mp4" />
+          <source src={content.video} type={content.video.contentType || 'video/mp4'} />
           Your browser does not support the video tag.
         </video>
       );
     }
-    return null;
+    return null; // Return null if no content
   };
 
   return (
-    <div className={`bg-yellow-50 shadow-lg rounded-lg p-6 mb-6 mx-auto max-w-xl relative border border-yellow-200 transition-transform transform hover:scale-105`}>
+    <div className="bg-yellow-50 shadow-lg rounded-lg p-6 mb-6 mx-auto max-w-xl relative border border-yellow-200 transition-transform transform hover:scale-105">
       {/* Close Button */}
       <button className="absolute top-2 right-2 text-gray-700 hover:text-red-500 transition-colors duration-300">
         <FaTimes className="text-xl" />
@@ -44,9 +44,10 @@ export const Post = ({ title, name, timeAgo, content, likes, comments, shares })
           <p className="text-yellow-600 text-sm">{timeAgo}</p>
         </div>
       </div>
-
+    
       {/* Post Title */}
-      <div className="text-center mb-4">
+      
+      <div className="text-left mb-4">
         <h2 className="text-xl font-bold text-yellow-700 transition-all duration-300">{title}</h2>
       </div>
 

@@ -7,6 +7,7 @@ import MainContent from './MainContent';
 
 const Home = () => {
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [showModal, setShowModal] = useState(false); // Manage modal state
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,10 +23,10 @@ const Home = () => {
 
   return (
     <div className="relative min-h-screen flex flex-col">
-      <Navbar toggleSidebar={toggleSidebar} />
+      <Navbar showModal={showModal} toggleSidebar={toggleSidebar} />
       <div className="flex justify-between mt-16">
-        <SidebarLeft isCollapsed={isSidebarCollapsed} />
-        <MainContent />
+        <SidebarLeft isCollapsed={isSidebarCollapsed} showModal={showModal} />
+        <MainContent setShowModal={setShowModal} />
       </div>
     </div>
   );

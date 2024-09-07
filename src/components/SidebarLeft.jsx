@@ -1,9 +1,11 @@
 import React from 'react';
 
-const SidebarLeft = ({ isCollapsed }) => {
+const SidebarLeft = ({ isCollapsed, showModal }) => {
   return (
     <div
-      className={`fixed left-0 top-16 ${isCollapsed ? 'w-16' : 'w-1/5'} min-h-screen bg-yellow-200 p-4 shadow-2xl border-4 border-yellow-300 transition-all duration-300 flex flex-col items-center`}
+      className={`fixed left-0 top-16 ${isCollapsed ? 'w-16' : 'w-1/5'} min-h-screen p-4 shadow-2xl border-4 border-yellow-300 transition-all duration-300 flex flex-col items-center ${
+        showModal ? 'bg-purple-100 bg-opacity-80 pointer-events-none opacity-50' : 'bg-yellow-200'
+      }`}
     >
       <ul
         className={`flex flex-col ${isCollapsed ? 'items-center' : 'items-start'} space-y-4 text-gray-900 font-bold text-xl`}
