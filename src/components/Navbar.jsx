@@ -19,7 +19,7 @@ const Navbar = ({ showModal, toggleSidebar }) => {
   };
 
   return (
-    <nav className={`p-4 fixed w-full top-0  ${showModal ? 'bg-purple-100 bg-opacity-80 shadow-none pointer-events-none z-10' : 'bg-yellow-300 shadow-lg z-50'}`}>
+    <nav className={`p-4 fixed w-full top-0  ${showModal ? 'bg-purple-100 bg-opacity-80 shadow-none pointer-events-none z-10' : 'bg-yellow-300 shadow-lg z-40'}`}>
       <div className="container mx-auto flex justify-between items-center px-6">
         <div className={`flex items-center space-x-4 ${showModal ? 'opacity-50' : ''}`}>
           <div className="text-3xl font-bold text-blue-600">

@@ -73,7 +73,7 @@ export const CreatePost = ({ setShowModal }) => {
 
   return (
     <>
-      <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-xl mx-auto mt-6 border border-gray-200 relative z-10">
+      <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-xl mx-auto mt-6 border border-gray-200 relative">
         <div className="flex items-center space-x-4 mb-4">
           <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-white text-xl">
             <span role="img" aria-label="Profile Icon">👤</span>

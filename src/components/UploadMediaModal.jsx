@@ -14,10 +14,15 @@ export const UploadMediaModal = ({ userName, postTitle, setPostTitle, mediaConte
   };
 
   const handleCropImage = async () => {
-    const croppedImage = await getCroppedImg(mediaContent.url, croppedAreaPixels);
-    console.log(croppedImage); // Handle the cropped image
-    setCroppingMode(false); // Exit cropping mode
+    try {
+      const croppedImage = await getCroppedImg(URL.createObjectURL(mediaContent), croppedAreaPixels);
+      console.log(croppedImage); // Handle the cropped image (e.g., save or display)
+      setCroppingMode(false); // Exit cropping mode
+    } catch (error) {
+      console.error('Error cropping image:', error);
+    }
   };
+  
 
   const handleDeselectMedia = () => {
     handleFileChange({ target: { files: [] } }); // Simulate no file selected

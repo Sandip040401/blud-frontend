@@ -36,9 +36,13 @@ export default async function getCroppedImg(imageSrc, croppedAreaPixels) {
     return new Promise((resolve, reject) => {
       const img = new Image();
       img.src = url;
-      img.crossOrigin = 'anonymous';
+      img.crossOrigin = 'anonymous'; // Handle cross-origin issues
       img.onload = () => resolve(img);
-      img.onerror = (err) => reject(err);
+      img.onerror = (err) => {
+        console.error('Failed to load image:', err);
+        reject(err);
+      };
     });
   }
+  
   
